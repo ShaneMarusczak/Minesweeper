@@ -79,6 +79,7 @@ p {
   width: 20px;
   border: 1px dimgrey solid;
   background-color: rgb(201, 201, 201, 0.4);
+  text-align: center;
 }
 
 .cell:hover {
@@ -86,7 +87,7 @@ p {
 }
 
 .bomb {
-  background-color: dimgrey;
+  background-color: red;
 }
 
 .flipped {
@@ -94,7 +95,7 @@ p {
 }
 
 .flag {
-  color: red;
+  color: darkred;
 }
 
 .question-mark {

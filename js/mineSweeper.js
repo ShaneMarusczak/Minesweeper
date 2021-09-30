@@ -53,8 +53,6 @@
 
     setBomb() {
       this.bomb = true;
-      getCellElem(this.x, this.y).classList.add("bomb");
-
       for (let n of this.neighbors) {
         getCell(n[0], n[1]).hasBombNeighbor = true;
         getCell(n[0], n[1]).bombNeighborCount++;
@@ -67,11 +65,7 @@
       }
       if (e.button === 0 && this.clickable) {
         if (this.bomb) {
-          this.flipped = true;
-          gameOver = true;
-          this.clickable = false;
-          getCellElem(this.x, this.y).classList.add("bomb");
-          alert("boom");
+          lossHandler(this);
         } else if (this.hasBombNeighbor) {
           this.showNumber();
         } else {
@@ -107,7 +101,7 @@
       } else {
         this.flag = true;
         this.clickable = false;
-        getCellElem(this.x, this.y).textContent = "F";
+        getCellElem(this.x, this.y).textContent = "B";
         getCellElem(this.x, this.y).classList.add("flag");
         getCellElem(this.x, this.y).classList.remove("question-mark");
       }
@@ -118,6 +112,20 @@
       this.clickable = false;
       getCellElem(this.x, this.y).textContent = this.bombNeighborCount;
     }
+  }
+
+  function lossHandler(cell) {
+    cell.flipped = true;
+    gameOver = true;
+    cell.clickable = false;
+    for (let x = 0; x < difficulty; x++) {
+      for (let y = 0; y < difficulty; y++) {
+        if (getCell(x, y).bomb) {
+          getCellElem(x, y).classList.add("bomb");
+        }
+      }
+    }
+    alert("you lose");
   }
 
   function checkForWin() {
@@ -201,7 +209,9 @@
 
   function buildGrid(e) {
     if (!gameStarted && !gridBuilt) {
+      document.getElementById("difForm").classList.add("hidden");
       e.target.disabled = true;
+      e.target.classList.add("hidden");
       buildGridInternal();
       gridBuilt = true;
       gameStarted = true;
