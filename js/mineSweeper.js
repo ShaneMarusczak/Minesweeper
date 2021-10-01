@@ -15,9 +15,9 @@
 
   const bombCount = {
     easy: 12,
-    medium: 42,
-    hard: 70,
-    veryhard: 117,
+    medium: 35,
+    hard: 62,
+    veryhard: 107,
   };
 
   const checkBox = document.getElementById("hideTimer");
