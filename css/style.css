@@ -82,16 +82,24 @@ p {
   text-align: center;
 }
 
-.cell:hover:not(.flipped) {
-  cursor: pointer;
-}
-
 .explosion {
+  background-color: red !important;
   background-image: url("../images/boom.png");
 }
 
 .bomb {
+  background-color: grey;
+  background-image: url("../images/mine.png");
+}
+
+.correct {
+  background-color: green;
+  background-image: url("../images/red-flag.png");
+}
+
+.incorrect {
   background-color: darkred;
+  background-image: url("../images/red-flag.png");
 }
 
 .empty {

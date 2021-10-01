@@ -151,13 +151,24 @@
     getCellElem(cell.x, cell.y).classList.add("explosion");
     for (let x = 0; x < difficulty; x++) {
       for (let y = 0; y < difficulty; y++) {
-        if (getCell(x, y).bomb) {
+        if (
+          getCell(x, y).bomb &&
+          cell.x !== x &&
+          cell.y !== y &&
+          !getCell(x, y).flag
+        ) {
           getCellElem(x, y).classList.add("bomb");
+        } else if (getCell(x, y).bomb && getCell(x, y).flag) {
+          getCellElem(x, y).classList.remove("flag");
+          getCellElem(x, y).classList.add("correct");
+        } else if (!getCell(x, y).bomb && getCell(x, y).flag) {
+          getCellElem(x, y).classList.remove("flag");
+          getCellElem(x, y).classList.add("incorrect");
         }
       }
     }
     clearTimeout(runningTimer);
-    alert("you lose");
+    window.modal("You Lose!", 2000);
   }
 
   function checkForWin() {
@@ -188,7 +199,7 @@
   function handleWin() {
     gameOver = true;
     clearTimeout(runningTimer);
-    alert("you win");
+    window.modal("You Win!", 2000);
   }
 
   function showNonBombNeighbors(x, y) {
