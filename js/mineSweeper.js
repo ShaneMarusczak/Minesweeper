@@ -9,6 +9,8 @@
   let minutes = 0;
   let hours = 0;
 
+  let bombsLeft;
+
   const gameBoard = [];
 
   const bombCount = {
@@ -18,7 +20,6 @@
     veryhard: 125,
   };
 
-  const gameBoard_UI = document.getElementById("gameBoard_UI");
   const checkBox = document.getElementById("hideTimer");
   const timer = document.getElementById("timer");
 
@@ -121,6 +122,7 @@
         getCellElem(this.x, this.y).classList.add("question-mark");
         this.flag = false;
         this.questionMark = true;
+        updateBombsLeft(1);
       } else if (this.questionMark) {
         getCellElem(this.x, this.y).textContent = "";
         this.flag = false;
@@ -131,6 +133,7 @@
       } else {
         this.flag = true;
         this.clickable = false;
+        updateBombsLeft(-1);
         getCellElem(this.x, this.y).classList.add("flag");
         getCellElem(this.x, this.y).classList.remove("question-mark");
       }
@@ -142,6 +145,11 @@
       getCellElem(this.x, this.y).textContent = this.bombNeighborCount;
       getCellElem(this.x, this.y).classList.add("flipped");
     }
+  }
+
+  function updateBombsLeft(change) {
+    bombsLeft += change;
+    document.getElementById("bombsLeft").textContent = bombsLeft;
   }
 
   function lossHandler(cell) {
@@ -259,6 +267,8 @@
       timer.classList.remove("hide");
       timerContainer.classList.remove("hide");
       timerStart();
+      bombsLeft = getBombCount();
+      updateBombsLeft(0);
     }
   }
 
@@ -269,7 +279,7 @@
       const col = document.createElement("div");
       col.id = "col-" + x;
       col.classList.add("col");
-      gameBoard_UI.appendChild(col);
+      document.getElementById("gameBoard_UI").appendChild(col);
       for (let y = 0; y < difficulty; y++) {
         const newCell = new Cell(x, y);
         gameBoard[x].push(newCell);

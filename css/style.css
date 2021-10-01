@@ -82,6 +82,10 @@ p {
   text-align: center;
 }
 
+.cell:not(.flipped):hover {
+  background-color: lightgrey;
+}
+
 .explosion {
   background-color: red !important;
   background-image: url("../images/boom.png");
@@ -143,4 +147,10 @@ select {
   font-size: 1em;
   font-family: "Roboto Mono", monospace;
   background-color: lightblue;
+}
+
+#timer {
+  margin-top: 0;
+  margin-bottom: 2px;
+  text-align: center;
 }
