@@ -14,10 +14,10 @@
   const gameBoard = [];
 
   const bombCount = {
-    easy: 20,
-    medium: 45,
-    hard: 75,
-    veryhard: 125,
+    easy: 12,
+    medium: 42,
+    hard: 70,
+    veryhard: 117,
   };
 
   const checkBox = document.getElementById("hideTimer");
@@ -111,7 +111,7 @@
         this.showFlagOrQuestionMark();
       }
       if (checkForWin()) {
-        handleWin();
+        gameOverHandler("You Win!");
       }
     }
 
@@ -154,19 +154,23 @@
 
   function lossHandler(cell) {
     cell.flipped = true;
-    gameOver = true;
     cell.clickable = false;
     getCellElem(cell.x, cell.y).classList.add("explosion");
     for (let x = 0; x < difficulty; x++) {
       for (let y = 0; y < difficulty; y++) {
-        if (
-          getCell(x, y).bomb &&
-          cell.x !== x &&
-          cell.y !== y &&
-          !getCell(x, y).flag
-        ) {
+        const isClickedCell = cell.x === x && cell.y === y;
+        if (!isClickedCell && getCell(x, y).bomb && !getCell(x, y).flag) {
           getCellElem(x, y).classList.add("bomb");
-        } else if (getCell(x, y).bomb && getCell(x, y).flag) {
+        }
+      }
+    }
+    gameOverHandler("You Lose!");
+  }
+
+  function gameOverHandler(message) {
+    for (let x = 0; x < difficulty; x++) {
+      for (let y = 0; y < difficulty; y++) {
+        if (getCell(x, y).bomb && getCell(x, y).flag) {
           getCellElem(x, y).classList.remove("flag");
           getCellElem(x, y).classList.add("correct");
         } else if (!getCell(x, y).bomb && getCell(x, y).flag) {
@@ -175,21 +179,18 @@
         }
       }
     }
+    gameOver = true;
     clearTimeout(runningTimer);
-    window.modal("You Lose!", 2000);
+    window.modal(message, 2000);
   }
 
   function checkForWin() {
     const bombCount = getBombCount();
     const cellCount = Math.pow(difficulty, 2);
-    let flippedCount = 0;
     let flaggedAndBombCount = 0;
     let flaggedCount = 0;
     for (let x = 0; x < difficulty; x++) {
       for (let y = 0; y < difficulty; y++) {
-        if (getCell(x, y).flipped) {
-          flippedCount++;
-        }
         if (getCell(x, y).flag) {
           flaggedCount++;
         }
@@ -198,16 +199,7 @@
         }
       }
     }
-    return (
-      (flaggedAndBombCount === bombCount && flippedCount === bombCount) ||
-      cellCount - flippedCount === bombCount
-    );
-  }
-
-  function handleWin() {
-    gameOver = true;
-    clearTimeout(runningTimer);
-    window.modal("You Win!", 2000);
+    return flaggedAndBombCount === bombCount && flaggedCount === bombCount;
   }
 
   function showNonBombNeighbors(x, y) {
@@ -295,16 +287,15 @@
   }
 
   function placeBombs() {
-    let bombs = getBombCount();
-    let range = difficulty - 1;
-    while (bombs > 0) {
+    let bombsToPlace = getBombCount();
+    while (bombsToPlace > 0) {
       let x, y;
       do {
-        x = window.randomIntFromInterval(0, range);
-        y = window.randomIntFromInterval(0, range);
-      } while (getCell(x, y).bomb);
+        x = window.randomIntFromInterval(0, difficulty);
+        y = window.randomIntFromInterval(0, difficulty);
+      } while (!validPosition(x, y) || getCell(x, y).bomb);
       getCell(x, y).setBomb();
-      bombs--;
+      bombsToPlace--;
     }
   }
 

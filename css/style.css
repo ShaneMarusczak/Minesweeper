@@ -92,8 +92,8 @@ p {
 }
 
 .bomb {
-  background-color: grey;
-  background-image: url("../images/mine.png");
+  background-color: grey !important;
+  background-image: url("../images/mine.png") !important;
 }
 
 .correct {
