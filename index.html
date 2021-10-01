@@ -11,17 +11,27 @@
     <meta name="Description" content="Minesweeper!" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-    <link rel="manifest" href="site.webmanifest" /> -->
+    <link rel="manifest" href="site.webmanifest" />
+    <script
+      type="text/javascript"
+      src="https://marusczak.com/BuildingBlocks/js/buildingBlocks.min.js"
+      defer
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://marusczak.com/BuildingBlocks/js/modal.min.js"
+      defer
+    ></script>
     <script src="js/mineSweeper.js" defer></script>
     <title>Minesweeper</title>
   </head>
   <body>
     <header id="header-tag">
       <h1>Minesweeper</h1>
-      <p id="updateText" title="9:38 AM">Last Updated: September 30, 2021</p>
+      <p id="updateText" title="11:26 AM">Last Updated: October 1, 2021</p>
       <a
         id="homeLink"
         href="https://marusczak.com/Games-Home-Page"
@@ -37,19 +47,26 @@
         ><img id="githubicon" src="images/github-icon.png"
       /></a>
     </header>
+    <div id="timerContainer" class="hide">
+      <h2 id="timer" class="hide"><time>00:00:00</time></h2>
+      <div class="hideTimerContainer">
+        <input type="checkbox" name="hideTimer" id="hideTimer" value="" />
+        <label for="hideTimer" id="timerLabel">Hide Timer</label>
+      </div>
+    </div>
     <menu>
-      <form id="difForm">
-        <label for="difficulty">Difficulty: </label>
-        <select id="difficulty" class="shadowBox" autocomplete="off">
-          <option value="10">Easy</option>
-          <option value="15" selected="selected">Medium</option>
-          <option value="20">Hard</option>
-          <option value="30">Very Hard</option>
-        </select>
-      </form>
       <button type="button" name="buildGrid" id="buildGrid">Start</button>
       <button type="button" onclick="location.reload()">Restart</button>
     </menu>
+    <form id="difForm">
+      <label for="difficulty">Difficulty: </label>
+      <select id="difficulty" class="shadowBox" autocomplete="off">
+        <option value="10">Easy</option>
+        <option value="15" selected="selected">Medium</option>
+        <option value="20">Hard</option>
+        <option value="30">Very Hard</option>
+      </select>
+    </form>
     <div class="gameBoardWrapper">
       <div id="gameBoard_UI" class="shadowBox"></div>
     </div>

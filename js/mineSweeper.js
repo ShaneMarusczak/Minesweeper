@@ -4,6 +4,11 @@
   let gridBuilt = false;
   let difficulty = 0;
 
+  let runningTimer;
+  let seconds = 0;
+  let minutes = 0;
+  let hours = 0;
+
   const gameBoard = [];
 
   const bombCount = {
@@ -14,6 +19,31 @@
   };
 
   const gameBoard_UI = document.getElementById("gameBoard_UI");
+  const checkBox = document.getElementById("hideTimer");
+  const timer = document.getElementById("timer");
+
+  function timerTick() {
+    seconds++;
+    if (seconds >= 60) {
+      seconds = 0;
+      minutes++;
+      if (minutes >= 60) {
+        minutes = 0;
+        hours++;
+      }
+    }
+    timer.textContent =
+      (hours ? (hours > 9 ? hours : "0" + hours) : "00") +
+      ":" +
+      (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+      ":" +
+      (seconds > 9 ? seconds : "0" + seconds);
+    timerStart();
+  }
+
+  function timerStart() {
+    runningTimer = setTimeout(timerTick, 1000);
+  }
 
   function getBombCount() {
     if (difficulty === 10) return bombCount.easy;
@@ -101,7 +131,6 @@
       } else {
         this.flag = true;
         this.clickable = false;
-        getCellElem(this.x, this.y).textContent = "B";
         getCellElem(this.x, this.y).classList.add("flag");
         getCellElem(this.x, this.y).classList.remove("question-mark");
       }
@@ -111,6 +140,7 @@
       this.flipped = true;
       this.clickable = false;
       getCellElem(this.x, this.y).textContent = this.bombNeighborCount;
+      getCellElem(this.x, this.y).classList.add("flipped");
     }
   }
 
@@ -118,6 +148,7 @@
     cell.flipped = true;
     gameOver = true;
     cell.clickable = false;
+    getCellElem(cell.x, cell.y).classList.add("explosion");
     for (let x = 0; x < difficulty; x++) {
       for (let y = 0; y < difficulty; y++) {
         if (getCell(x, y).bomb) {
@@ -125,6 +156,7 @@
         }
       }
     }
+    clearTimeout(runningTimer);
     alert("you lose");
   }
 
@@ -133,10 +165,14 @@
     const cellCount = Math.pow(difficulty, 2);
     let flippedCount = 0;
     let flaggedAndBombCount = 0;
+    let flaggedCount = 0;
     for (let x = 0; x < difficulty; x++) {
       for (let y = 0; y < difficulty; y++) {
         if (getCell(x, y).flipped) {
           flippedCount++;
+        }
+        if (getCell(x, y).flag) {
+          flaggedCount++;
         }
         if (getCell(x, y).bomb && getCell(x, y).flag) {
           flaggedAndBombCount++;
@@ -144,13 +180,14 @@
       }
     }
     return (
-      flaggedAndBombCount === bombCount ||
+      (flaggedAndBombCount === bombCount && flippedCount === bombCount) ||
       cellCount - flippedCount === bombCount
     );
   }
 
   function handleWin() {
     gameOver = true;
+    clearTimeout(runningTimer);
     alert("you win");
   }
 
@@ -169,14 +206,11 @@
     getCell(x, y).flipped = true;
     getCell(x, y).clickable = false;
     getCellElem(x, y).classList.add("flipped");
+    getCellElem(x, y).classList.add("empty");
     getCell(x, y).checked = true;
     for (let n of getCell(x, y).neighbors) {
       showNonBombNeighbors(n[0], n[1]);
     }
-  }
-
-  function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   function getDifficulty() {
@@ -203,10 +237,6 @@
     return x >= 0 && x < difficulty && y >= 0 && y < difficulty;
   }
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   function buildGrid(e) {
     if (!gameStarted && !gridBuilt) {
       document.getElementById("difForm").classList.add("hidden");
@@ -215,6 +245,9 @@
       buildGridInternal();
       gridBuilt = true;
       gameStarted = true;
+      timer.classList.remove("hide");
+      timerContainer.classList.remove("hide");
+      timerStart();
     }
   }
 
@@ -246,16 +279,29 @@
     while (bombs > 0) {
       let x, y;
       do {
-        x = randomIntFromInterval(0, range);
-        y = randomIntFromInterval(0, range);
+        x = window.randomIntFromInterval(0, range);
+        y = window.randomIntFromInterval(0, range);
       } while (getCell(x, y).bomb);
       getCell(x, y).setBomb();
       bombs--;
     }
   }
 
+  function toggleTimer() {
+    if (checkBox.checked) {
+      timer.classList.add("notShown");
+      window.setCookie("hideSudokuTimer", "Y", 30);
+    } else {
+      timer.classList.remove("notShown");
+      window.setCookie("hideSudokuTimer", "N", 30);
+    }
+  }
+
   (function () {
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
+    checkBox.addEventListener("click", toggleTimer);
+    checkBox.checked = window.getCookie("hideSudokuTimer") === "Y";
+    toggleTimer();
     document.oncontextmenu = () => false;
   })();
 })();

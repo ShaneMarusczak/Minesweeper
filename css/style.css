@@ -82,20 +82,24 @@ p {
   text-align: center;
 }
 
-.cell:hover {
+.cell:hover:not(.flipped) {
   cursor: pointer;
 }
 
-.bomb {
-  background-color: red;
+.explosion {
+  background-image: url("../images/boom.png");
 }
 
-.flipped {
-  background-color: navy;
+.bomb {
+  background-color: darkred;
+}
+
+.empty {
+  background-color: #484848;
 }
 
 .flag {
-  color: darkred;
+  background-image: url("../images/red-flag.png");
 }
 
 .question-mark {
@@ -120,4 +124,15 @@ button {
 .shadowBox {
   box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hide {
+  display: none !important;
+}
+
+select {
+  margin-top: 0px;
+  font-size: 1em;
+  font-family: "Roboto Mono", monospace;
+  background-color: lightblue;
 }
