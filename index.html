@@ -27,13 +27,13 @@
       src="https://marusczak.com/BuildingBlocks/js/buildingBlocks.min.js"
       defer
     ></script>
-    <script src="js/mineSweeper.min.js" defer></script>
+    <script src="js/mineSweeper.js" defer></script>
     <title>Minesweeper</title>
   </head>
   <body>
     <header id="header-tag">
       <h1>Minesweeper</h1>
-      <p id="updateText" title="11:26 AM">Last Updated: October 1, 2021</p>
+      <p id="updateText" title="6:07 PM">Last Updated: October 3, 2021</p>
       <a
         id="homeLink"
         href="https://marusczak.com/Games-Home-Page"
@@ -71,13 +71,13 @@
     <form id="difForm">
       <label for="difficulty">Difficulty: </label>
       <select id="difficulty" class="shadowBox" autocomplete="off">
-        <option value="10" selected="selected">Easy</option>
-        <option value="15">Medium</option>
-        <option value="20">Hard</option>
-        <option value="30">Very Hard</option>
+        <option value="10" id="difEasy">Easy</option>
+        <option value="15" id="difMed">Medium</option>
+        <option value="20" id="difHard">Hard</option>
+        <option value="30" id="difvHard">Very Hard</option>
       </select>
     </form>
-    <div id="highScores">
+    <div id="highScores" class="hide">
       <p>High Scores</p>
       <ul>
         <li>Easy: <span id="easyBestScore"></span></li>

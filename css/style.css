@@ -14,19 +14,19 @@ body {
 
 header {
   text-align: center;
-  /* margin: 10px; */
+  margin-top: 20px;
 }
 
 #githubicon {
   position: absolute;
   top: 20px;
   right: 6vw;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   transition: 1.5s;
   z-index: 0;
   background-color: transparent;
-  border-radius: 30px;
+  border-radius: 100px;
 }
 
 #githubicon:hover {
@@ -38,8 +38,8 @@ header {
   position: absolute;
   top: 20px;
   left: 6vw;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   transition: 1.5s;
   z-index: 0;
   background-color: transparent;
@@ -65,11 +65,37 @@ p {
 }
 
 .cell {
-  height: 20px;
-  width: 20px;
   border: 1px dimgrey solid;
   background-color: rgb(201, 201, 201, 0.4);
   text-align: center;
+}
+
+.easyCell {
+  height: 27px;
+  width: 27px;
+  background-size: 27px;
+  font-size: 22px;
+}
+
+.medCell {
+  height: 23px;
+  width: 23px;
+  background-size: 23px;
+  font-size: 20px;
+}
+
+.hardCell {
+  height: 21px;
+  width: 21px;
+  background-size: 21px;
+  font-size: 17px;
+}
+
+.vhardCell {
+  height: 19px;
+  width: 19px;
+  background-size: 19px;
+  font-size: 16px;
 }
 
 .cell:not(.flipped):hover {
@@ -132,6 +158,10 @@ select {
   background-color: lightblue;
 }
 
+select:hover {
+  cursor: pointer !important;
+}
+
 #timer {
   margin-top: 0;
   margin-bottom: 2px;
@@ -183,5 +213,17 @@ select {
 }
 
 #highScores {
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+#difForm {
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.extraMargin {
+  margin-top: 17px !important;
 }

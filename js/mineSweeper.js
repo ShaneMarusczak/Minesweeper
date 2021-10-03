@@ -71,7 +71,6 @@
       this.y = y;
       this.neighbors = [];
       this.bomb = false;
-      this.hasBombNeighbor = false;
       this.bombNeighborCount = 0;
       this.checked = false;
       this.clickable = true;
@@ -96,9 +95,7 @@
 
     setBomb() {
       this.bomb = true;
-      getCellElem(this.x, this.y).style.backgroundColor = "pink";
       for (let n of this.neighbors) {
-        getCell(n[0], n[1]).hasBombNeighbor = true;
         getCell(n[0], n[1]).bombNeighborCount++;
       }
     }
@@ -110,7 +107,7 @@
       if (e.button === 0 && this.clickable) {
         if (this.bomb) {
           lossHandler(this);
-        } else if (this.hasBombNeighbor) {
+        } else if (this.bombNeighborCount > 0) {
           this.showNumber();
         } else {
           for (let x = 0; x < difficulty; x++) {
@@ -220,7 +217,7 @@
     }
     gameOver = true;
     clearTimeout(runningTimer);
-    window.modal(message, 2000);
+    window.modal(message, 1200);
   }
 
   function checkForWin() {
@@ -249,7 +246,7 @@
       getCell(x, y).checked
     ) {
       return;
-    } else if (getCell(x, y).hasBombNeighbor) {
+    } else if (getCell(x, y).bombNeighborCount > 0) {
       getCell(x, y).showNumber();
       return;
     }
@@ -302,6 +299,8 @@
       timerStart();
       bombsLeft = getBombCount();
       updateBombsLeft(0);
+      document.getElementById("btns").classList.add("extraMargin");
+      window.setCookie("mnswprprevdif", difficulty, 30);
     }
   }
 
@@ -322,6 +321,15 @@
         cell.classList.add("cell");
         col.appendChild(cell);
         cell.addEventListener("mouseup", (e) => newCell.handleClick(e));
+        if (difficulty === 10) {
+          cell.classList.add("easyCell");
+        } else if (difficulty === 15) {
+          cell.classList.add("medCell");
+        } else if (difficulty === 20) {
+          cell.classList.add("hardCell");
+        } else if (difficulty === 30) {
+          cell.classList.add("vhardCell");
+        }
       }
     }
     placeBombs();
@@ -359,12 +367,30 @@
     ).textContent = vhardBestScoreOnLoad;
   }
 
+  function initializeDificulty() {
+    const prevDif = Number(window.getCookie("mnswprprevdif"));
+    if (prevDif === 10) {
+      document.getElementById("difEasy").setAttribute("selected", "selected");
+    } else if (prevDif === 15) {
+      document.getElementById("difMed").setAttribute("selected", "selected");
+    } else if (prevDif === 20) {
+      document.getElementById("difHard").setAttribute("selected", "selected");
+    } else if (prevDif === 30) {
+      document.getElementById("difvHard").setAttribute("selected", "selected");
+    }
+  }
+
   (function () {
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     checkBox.addEventListener("click", toggleTimer);
-    checkBox.checked = window.getCookie("hideSudokuTimer") === "Y";
+    const hideTimer = window.getCookie("hideSudokuTimer") === "Y";
+    checkBox.checked = hideTimer;
+    if (!hideTimer) {
+      document.getElementById("highScores").classList.remove("hide");
+    }
     toggleTimer();
     document.oncontextmenu = () => false;
     initializeHighScore();
+    initializeDificulty();
   })();
 })();
