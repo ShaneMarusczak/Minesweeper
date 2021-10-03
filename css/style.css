@@ -14,17 +14,7 @@ body {
 
 header {
   text-align: center;
-  margin: 10px;
-}
-
-menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  text-align: center;
-  align-items: center;
-  width: max-content;
-  min-height: 80px;
+  /* margin: 10px; */
 }
 
 #githubicon {
@@ -126,13 +116,6 @@ p {
   visibility: hidden;
 }
 
-button {
-  width: 90px;
-  height: 35px;
-  margin-left: 7px;
-  margin-right: 7px;
-}
-
 .shadowBox {
   box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -153,4 +136,52 @@ select {
   margin-top: 0;
   margin-bottom: 2px;
   text-align: center;
+}
+
+#timerLabel {
+  font-size: 1.1em;
+  padding-left: 0px;
+}
+
+#hideTimer {
+  height: 17px;
+  width: 17px;
+}
+
+#hideTimerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+#btns > div {
+  font-size: 1em;
+  border-radius: 7px;
+  padding: 5px;
+  border: 1px solid black;
+  transition: 500ms;
+  width: max-content;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#btns > div:hover {
+  background-color: dimgray;
+  cursor: pointer;
+}
+
+#bombsLeftText {
+  font-size: large;
+}
+
+#highScores {
+  margin-top: 50px;
 }

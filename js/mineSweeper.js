@@ -8,8 +8,19 @@
   let seconds = 0;
   let minutes = 0;
   let hours = 0;
+  let timeSeconds = 0;
 
   let bombsLeft;
+
+  const easyBestScoreOnLoad = window.getCookie("mnswpreasy");
+  const medBestScoreOnLoad = window.getCookie("mnswprmed");
+  const hardBestScoreOnLoad = window.getCookie("mnswprhard");
+  const vhardBestScoreOnLoad = window.getCookie("mnswprvhard");
+
+  const easySeconds = Number(window.getCookie("mnswpreasysec"));
+  const medSeconds = Number(window.getCookie("mnswprmedsec"));
+  const hardSeconds = Number(window.getCookie("mnswprhardsec"));
+  const vhardSeconds = Number(window.getCookie("mnswprvhardsec"));
 
   const gameBoard = [];
 
@@ -33,6 +44,7 @@
         hours++;
       }
     }
+    timeSeconds = seconds + minutes * 60 + hours * 3600;
     timer.textContent =
       (hours ? (hours > 9 ? hours : "0" + hours) : "00") +
       ":" +
@@ -84,6 +96,7 @@
 
     setBomb() {
       this.bomb = true;
+      getCellElem(this.x, this.y).style.backgroundColor = "pink";
       for (let n of this.neighbors) {
         getCell(n[0], n[1]).hasBombNeighbor = true;
         getCell(n[0], n[1]).bombNeighborCount++;
@@ -111,7 +124,7 @@
         this.showFlagOrQuestionMark();
       }
       if (checkForWin()) {
-        gameOverHandler("You Win!");
+        winHandler();
       }
     }
 
@@ -165,6 +178,32 @@
       }
     }
     gameOverHandler("You Lose!");
+  }
+
+  function winHandler() {
+    const time = timer.textContent;
+    if (difficulty === 10) {
+      if (timeSeconds < easySeconds || easySeconds === 0) {
+        window.setCookie("mnswpreasy", time, 30);
+        window.setCookie("mnswpreasysec", timeSeconds, 30);
+      }
+    } else if (difficulty === 15) {
+      if (timeSeconds < medSeconds || medSeconds === 0) {
+        window.setCookie("mnswprmed", time, 30);
+        window.setCookie("mnswprmedsec", timeSeconds, 30);
+      }
+    } else if (difficulty === 20) {
+      if (timeSeconds < hardSeconds || hardSeconds === 0) {
+        window.setCookie("mnswprhard", time, 30);
+        window.setCookie("mnswprhardsec", timeSeconds, 30);
+      }
+    } else if (difficulty === 30) {
+      if (timeSeconds < vhardSeconds || vhardSeconds === 0) {
+        window.setCookie("mnswprvhard", time, 30);
+        window.setCookie("mnswprvhardsec", timeSeconds, 30);
+      }
+    }
+    gameOverHandler("You Win!");
   }
 
   function gameOverHandler(message) {
@@ -250,7 +289,9 @@
 
   function buildGrid(e) {
     if (!gameStarted && !gridBuilt) {
+      document.getElementById("updateText").classList.add("hide");
       document.getElementById("difForm").classList.add("hidden");
+      document.getElementById("highScores").classList.add("hide");
       e.target.disabled = true;
       e.target.classList.add("hidden");
       buildGridInternal();
@@ -309,11 +350,21 @@
     }
   }
 
+  function initializeHighScore() {
+    document.getElementById("easyBestScore").textContent = easyBestScoreOnLoad;
+    document.getElementById("medBestScore").textContent = medBestScoreOnLoad;
+    document.getElementById("hardBestScore").textContent = hardBestScoreOnLoad;
+    document.getElementById(
+      "vhardBestScore"
+    ).textContent = vhardBestScoreOnLoad;
+  }
+
   (function () {
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     checkBox.addEventListener("click", toggleTimer);
     checkBox.checked = window.getCookie("hideSudokuTimer") === "Y";
     toggleTimer();
     document.oncontextmenu = () => false;
+    initializeHighScore();
   })();
 })();

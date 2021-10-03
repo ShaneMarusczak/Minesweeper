@@ -55,24 +55,36 @@
         <input type="checkbox" name="hideTimer" id="hideTimer" value="" />
         <label for="hideTimer" id="timerLabel">Hide Timer</label>
       </div>
-      <p>Bombs Left:<span id="bombsLeft"></span></p>
+      <p id="bombsLeftText">
+        Bombs Left:<b><span id="bombsLeft"></span></b>
+      </p>
     </div>
-    <menu>
-      <button type="button" name="buildGrid" id="buildGrid">Start</button>
-      <button type="button" onclick="location.reload()">Restart</button>
-    </menu>
+    <div id="gameBoard_UI" class="shadowBox"></div>
+    <div id="btns">
+      <div class="shadowBox" name="buildGrid" id="buildGrid">
+        Play
+      </div>
+      <div id="reload" class="shadowBox" onclick="location.reload()">
+        Start Over
+      </div>
+    </div>
     <form id="difForm">
       <label for="difficulty">Difficulty: </label>
       <select id="difficulty" class="shadowBox" autocomplete="off">
-        <option value="10">Easy</option>
-        <option value="15" selected="selected">Medium</option>
+        <option value="10" selected="selected">Easy</option>
+        <option value="15">Medium</option>
         <option value="20">Hard</option>
         <option value="30">Very Hard</option>
       </select>
     </form>
-    <div class="gameBoardWrapper">
-      <div id="gameBoard_UI" class="shadowBox"></div>
+    <div id="highScores">
+      <p>High Scores</p>
+      <ul>
+        <li>Easy: <span id="easyBestScore"></span></li>
+        <li>Medium: <span id="medBestScore"></span></li>
+        <li>Hard: <span id="hardBestScore"></span></li>
+        <li>Very Hard: <span id="vhardBestScore"></span></li>
+      </ul>
     </div>
-    <div id="messages"></div>
   </body>
 </html>
