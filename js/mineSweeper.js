@@ -239,22 +239,18 @@
   }
 
   function showNonBombNeighbors(x, y) {
-    if (
-      getCell(x, y).questionMark ||
-      getCell(x, y).flag ||
-      getCell(x, y).bomb ||
-      getCell(x, y).checked
-    ) {
+    const cell = getCell(x, y);
+    if (cell.questionMark || cell.flag || cell.bomb || cell.checked) {
       return;
-    } else if (getCell(x, y).bombNeighborCount > 0) {
-      getCell(x, y).showNumber();
+    } else if (cell.bombNeighborCount > 0) {
+      cell.showNumber();
       return;
     }
-    getCell(x, y).flipped = true;
-    getCell(x, y).clickable = false;
+    cell.flipped = true;
+    cell.clickable = false;
     getCellElem(x, y).classList.add("flipped");
     getCellElem(x, y).classList.add("empty");
-    getCell(x, y).checked = true;
+    cell.checked = true;
     for (let n of getCell(x, y).neighbors) {
       showNonBombNeighbors(n[0], n[1]);
     }
