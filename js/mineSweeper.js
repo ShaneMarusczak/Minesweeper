@@ -295,9 +295,39 @@
       timerStart();
       bombsLeft = getBombCount();
       updateBombsLeft(0);
+      toggleDisplay();
       document.getElementById("btns").classList.add("extraMargin");
       window.setCookie("mnswprprevdif", difficulty, 30);
     }
+  }
+
+  function toggleHeader() {
+    if (difficulty === 10)
+      document
+        .getElementById("header-tag")
+        .classList.add("header-after-start-e");
+    else if (difficulty === 15)
+      document
+        .getElementById("header-tag")
+        .classList.add("header-after-start-m");
+    else if (difficulty === 20)
+      document
+        .getElementById("header-tag")
+        .classList.add("header-after-start-h");
+    if (difficulty === 30)
+      document
+        .getElementById("header-tag")
+        .classList.add("header-after-start-vh");
+  }
+
+  function toggleDisplay() {
+    document.getElementById("buildGrid").classList.add("hide");
+    document.getElementById("reload").classList.remove("hide");
+    document
+      .getElementById("header-tag")
+      .classList.remove("header-before-start");
+    toggleHeader();
+    document.getElementById("gameBoard_UI").scrollIntoView();
   }
 
   function buildGridInternal() {

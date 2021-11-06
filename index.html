@@ -7,7 +7,10 @@
       rel="stylesheet"
     />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=800" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
     <meta name="Description" content="Minesweeper!" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="css/style.min.css" />
@@ -31,9 +34,9 @@
     <title>Minesweeper</title>
   </head>
   <body>
-    <header id="header-tag">
+    <p id="updateText" title="1:19 PM">Last Updated: November 6, 2021</p>
+    <header id="header-tag" class="header-before-start">
       <h1>Minesweeper</h1>
-      <p id="updateText" title="10:00 AM">Last Updated: October 10, 2021</p>
       <a
         id="homeLink"
         href="https://marusczak.com/Games-Home-Page"
@@ -64,7 +67,7 @@
       <div class="shadowBox" name="buildGrid" id="buildGrid">
         Play
       </div>
-      <div id="reload" class="shadowBox" onclick="location.reload()">
+      <div id="reload" class="shadowBox hide" onclick="location.reload()">
         Start Over
       </div>
     </div>

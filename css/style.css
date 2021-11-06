@@ -12,14 +12,34 @@ body {
   background-color: #b0c4de;
 }
 
-header {
+.header-before-start {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 20vh;
+}
+
+.header-after-start-e {
+  text-align: center;
+  margin-top: 16vh;
+}
+
+.header-after-start-m {
+  text-align: center;
+  margin-top: 12vh;
+}
+
+.header-after-start-h {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.header-after-start-vh {
+  text-align: center;
+  margin-top: 0;
 }
 
 #githubicon {
   position: absolute;
-  top: 20px;
+  top: 40px;
   right: 6vw;
   width: 60px;
   height: 60px;
@@ -36,7 +56,7 @@ header {
 
 #homeIcon {
   position: absolute;
-  top: 20px;
+  top: 40px;
   left: 6vw;
   width: 60px;
   height: 60px;
@@ -50,7 +70,7 @@ header {
 }
 
 h1 {
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 }
 
 p {
@@ -156,6 +176,7 @@ select {
   font-size: 1em;
   font-family: "Roboto Mono", monospace;
   background-color: lightblue;
+  width: 120px;
 }
 
 select:hover {
@@ -186,21 +207,21 @@ select:hover {
 
 #btns {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 20px;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 #btns > div {
-  font-size: 1em;
+  font-size: 2em;
   border-radius: 7px;
   padding: 5px;
   border: 1px solid black;
-  transition: 500ms;
-  width: max-content;
+  transition: background-color 500ms;
+  width: 250px;
   text-align: center;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 #btns > div:hover {
@@ -226,4 +247,8 @@ ul {
 
 .extraMargin {
   margin-top: 17px !important;
+}
+
+#updateText {
+  margin-top: 15px;
 }
