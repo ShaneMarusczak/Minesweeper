@@ -15,33 +15,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="css/style.min.css" />
     <link rel="icon" type="image/png" href="images/mine.png" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://marusczak.com/BuildingBlocks/css/modal.min.css"
-    />
-    <script
-      type="text/javascript"
-      src="https://marusczak.com/BuildingBlocks/js/modal.min.js"
-      defer
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://marusczak.com/BuildingBlocks/js/buildingBlocks.min.js"
-      defer
-    ></script>
     <script src="js/mineSweeper.min.js" defer></script>
     <title>Minesweeper</title>
   </head>
   <body>
-    <p id="updateText" title="1:58 PM">Last Updated: November 7, 2021</p>
+    <p id="updateText" title="9:24 PM">Last Updated: December 9, 2021</p>
     <header id="header-tag" class="header-before-start">
       <h1>Minesweeper</h1>
       <a
         id="homeLink"
         href="https://marusczak.com/Games-Home-Page"
         rel="noreferrer"
-        ><img id="homeIcon" src="images/house-icon.png"
+        ><img id="homeIcon" src="images/house-icon.png" alt="home"
       /></a>
 
       <a
@@ -49,7 +34,7 @@
         href="https://github.com/ShaneMarusczak/Minesweeper"
         target="_blank"
         rel="noreferrer"
-        ><img id="githubicon" src="images/github-icon.png"
+        ><img id="githubicon" src="images/github-icon.png" alt="github"
       /></a>
     </header>
     <div id="timerContainer" class="hide">
@@ -64,7 +49,7 @@
     </div>
     <div id="gameBoard_UI" class="shadowBox"></div>
     <div id="btns">
-      <div class="shadowBox" name="buildGrid" id="buildGrid">
+      <div class="shadowBox" id="buildGrid">
         Play
       </div>
       <div id="reload" class="shadowBox hide" onclick="location.reload()">

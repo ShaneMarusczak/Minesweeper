@@ -70,7 +70,7 @@ body {
 }
 
 h1 {
-  margin: 10px 10px 0px 10px;
+  margin: 10px 10px 0 10px;
 }
 
 p {
@@ -176,7 +176,7 @@ p {
 }
 
 select {
-  margin-top: 0px;
+  margin-top: 0;
   font-size: 1em;
   font-family: "Roboto Mono", monospace;
   background-color: lightblue;
@@ -195,7 +195,7 @@ select:hover {
 
 #timerLabel {
   font-size: 1.1em;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 #hideTimer {
@@ -256,3 +256,52 @@ ul {
 #updateText {
   margin-top: 15px;
 }
+
+#modal-box {
+  z-index: 1;
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#inner-modal-box {
+  position: relative;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 4px black;
+  margin-left: 40vw;
+  margin-top: 10vh;
+  background-color: azure;
+  width: 350px;
+  height: 15vh;
+}
+
+#modal-message {
+  vertical-align: middle;
+  font-family: "Roboto Mono", monospace !important;
+  font-size: xx-large;
+  line-height: 15vh;
+}
+
+#close-button {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 30px;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+
+#close-button:hover {
+  cursor: pointer;
+  color: red;
+}
+

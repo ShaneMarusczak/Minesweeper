@@ -12,15 +12,15 @@
 
   let bombsLeft;
 
-  const easyBestScoreOnLoad = window.getCookie("mnswpreasy");
-  const medBestScoreOnLoad = window.getCookie("mnswprmed");
-  const hardBestScoreOnLoad = window.getCookie("mnswprhard");
-  const vhardBestScoreOnLoad = window.getCookie("mnswprvhard");
+  const easyBestScoreOnLoad = getCookie("mnswpreasy");
+  const medBestScoreOnLoad = getCookie("mnswprmed");
+  const hardBestScoreOnLoad = getCookie("mnswprhard");
+  const vhardBestScoreOnLoad = getCookie("mnswprvhard");
 
-  const easySeconds = Number(window.getCookie("mnswpreasysec"));
-  const medSeconds = Number(window.getCookie("mnswprmedsec"));
-  const hardSeconds = Number(window.getCookie("mnswprhardsec"));
-  const vhardSeconds = Number(window.getCookie("mnswprvhardsec"));
+  const easySeconds = Number(getCookie("mnswpreasysec"));
+  const medSeconds = Number(getCookie("mnswprmedsec"));
+  const hardSeconds = Number(getCookie("mnswprhardsec"));
+  const vhardSeconds = Number(getCookie("mnswprvhardsec"));
 
   const gameBoard = [];
 
@@ -181,23 +181,23 @@
     const time = timer.textContent;
     if (difficulty === 10) {
       if (timeSeconds < easySeconds || easySeconds === 0) {
-        window.setCookie("mnswpreasy", time, 30);
-        window.setCookie("mnswpreasysec", timeSeconds, 30);
+        setCookie("mnswpreasy", time, 30);
+        setCookie("mnswpreasysec", timeSeconds, 30);
       }
     } else if (difficulty === 15) {
       if (timeSeconds < medSeconds || medSeconds === 0) {
-        window.setCookie("mnswprmed", time, 30);
-        window.setCookie("mnswprmedsec", timeSeconds, 30);
+        setCookie("mnswprmed", time, 30);
+        setCookie("mnswprmedsec", timeSeconds, 30);
       }
     } else if (difficulty === 20) {
       if (timeSeconds < hardSeconds || hardSeconds === 0) {
-        window.setCookie("mnswprhard", time, 30);
-        window.setCookie("mnswprhardsec", timeSeconds, 30);
+        setCookie("mnswprhard", time, 30);
+        setCookie("mnswprhardsec", timeSeconds, 30);
       }
     } else if (difficulty === 30) {
       if (timeSeconds < vhardSeconds || vhardSeconds === 0) {
-        window.setCookie("mnswprvhard", time, 30);
-        window.setCookie("mnswprvhardsec", timeSeconds, 30);
+        setCookie("mnswprvhard", time, 30);
+        setCookie("mnswprvhardsec", timeSeconds, 30);
       }
     }
     gameOverHandler("You Win!");
@@ -217,12 +217,11 @@
     }
     gameOver = true;
     clearTimeout(runningTimer);
-    window.modal(message, 1200);
+    modal(message, 1200);
   }
 
   function checkForWin() {
     const bombCount = getBombCount();
-    const cellCount = Math.pow(difficulty, 2);
     let flaggedAndBombCount = 0;
     let flaggedCount = 0;
     for (let x = 0; x < difficulty; x++) {
@@ -291,14 +290,46 @@
       gridBuilt = true;
       gameStarted = true;
       timer.classList.remove("hide");
-      timerContainer.classList.remove("hide");
+      document.getElementById("timerContainer").classList.remove("hide");
       timerStart();
       bombsLeft = getBombCount();
       updateBombsLeft(0);
       toggleDisplay();
       document.getElementById("btns").classList.add("extraMargin");
-      window.setCookie("mnswprprevdif", difficulty, 30);
+      setCookie("mnswprprevdif", difficulty, 30);
     }
+  }
+
+  function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + d.toUTCString();
+    document.cookie =
+        cname + "=" + cvalue + ";" + expires + ";path=/;SameSite=Lax";
+  }
+
+  function getCookie(cname) {
+    const name = cname + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
 
   function toggleHeader() {
@@ -361,13 +392,27 @@
     placeBombs();
   }
 
+  function modal(message, duration) {
+    const modalBox = document.createElement("div");
+    modalBox.id = "modal-box";
+    const innerModalBox = document.createElement("div");
+    innerModalBox.id = "inner-modal-box";
+    const modalMessage = document.createElement("span");
+    modalMessage.id = "modal-message";
+    innerModalBox.appendChild(modalMessage);
+    modalBox.appendChild(innerModalBox);
+    modalMessage.innerText = message;
+    document.getElementsByTagName("html")[0].appendChild(modalBox);
+    sleep(duration).then(() => modalBox.remove());
+  }
+
   function placeBombs() {
     let bombsToPlace = getBombCount();
     while (bombsToPlace > 0) {
       let x, y;
       do {
-        x = window.randomIntFromInterval(0, difficulty);
-        y = window.randomIntFromInterval(0, difficulty);
+        x = randomIntFromInterval(0, difficulty);
+        y = randomIntFromInterval(0, difficulty);
       } while (!validPosition(x, y) || getCell(x, y).bomb);
       getCell(x, y).setBomb();
       bombsToPlace--;
@@ -377,10 +422,10 @@
   function toggleTimer() {
     if (checkBox.checked) {
       timer.classList.add("notShown");
-      window.setCookie("hideSudokuTimer", "Y", 30);
+      setCookie("hideSudokuTimer", "Y", 30);
     } else {
       timer.classList.remove("notShown");
-      window.setCookie("hideSudokuTimer", "N", 30);
+      setCookie("hideSudokuTimer", "N", 30);
     }
   }
 
@@ -394,7 +439,7 @@
   }
 
   function initializeDificulty() {
-    const prevDif = Number(window.getCookie("mnswprprevdif"));
+    const prevDif = Number(getCookie("mnswprprevdif"));
     if (prevDif === 10) {
       document.getElementById("difEasy").setAttribute("selected", "selected");
     } else if (prevDif === 15) {
@@ -409,7 +454,7 @@
   (function () {
     document.getElementById("buildGrid").addEventListener("click", buildGrid);
     checkBox.addEventListener("click", toggleTimer);
-    const hideTimer = window.getCookie("hideSudokuTimer") === "Y";
+    const hideTimer = getCookie("hideSudokuTimer") === "Y";
     checkBox.checked = hideTimer;
     if (!hideTimer) {
       document.getElementById("highScores").classList.remove("hide");
