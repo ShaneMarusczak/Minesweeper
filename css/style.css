@@ -12,6 +12,35 @@ body {
   background-color: #b0c4de;
 }
 
+/* Accessibility: Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Accessibility: Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 .header-before-start {
   text-align: center;
   margin-top: 20vh;
@@ -66,6 +95,18 @@ body {
 }
 
 #homeIcon:hover {
+  transform: translateY(-5px);
+}
+
+/* Accessibility: Focus styles for icon links */
+#homeLink:focus,
+#gitHubLink:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+#homeLink:focus #homeIcon,
+#gitHubLink:focus #githubicon {
   transform: translateY(-5px);
 }
 
@@ -126,6 +167,18 @@ p {
   background-color: lightgrey;
 }
 
+/* Accessibility: Focus styles for cells */
+.cell:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: -2px;
+  z-index: 1;
+  position: relative;
+}
+
+.cell:not(.flipped):focus {
+  background-color: #add8e6;
+}
+
 .explosion {
   background-color: red !important;
   background-image: url("../images/boom.png");
@@ -156,6 +209,7 @@ p {
 
 .question-mark {
   color: blue;
+  font-weight: bold;
 }
 
 .hidden {
@@ -180,11 +234,17 @@ select {
   font-size: 1em;
   font-family: "Roboto Mono", monospace;
   background-color: lightblue;
-  width: 120px;
+  width: 200px;
 }
 
 select:hover {
   cursor: pointer !important;
+}
+
+/* Accessibility: Focus styles for select */
+select:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
 }
 
 #timer {
@@ -201,6 +261,12 @@ select:hover {
 #hideTimer {
   height: 17px;
   width: 17px;
+}
+
+/* Accessibility: Focus styles for checkbox */
+#hideTimer:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
 }
 
 #hideTimerContainer {
@@ -231,6 +297,13 @@ select:hover {
 #btns > div:hover {
   background-color: dimgray;
   cursor: pointer;
+}
+
+/* Accessibility: Focus styles for buttons */
+#btns > div:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  background-color: #696969;
 }
 
 #bombsLeftText {
@@ -270,15 +343,18 @@ ul {
 }
 
 #inner-modal-box {
-  position: relative;
+  position: absolute;
   text-align: center;
   border-radius: 5px;
   box-shadow: inset 0 0 0 4px black;
-  margin-left: 40vw;
-  margin-top: 10vh;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background-color: azure;
   width: 350px;
+  max-width: 90vw;
   height: 15vh;
+  min-height: 100px;
 }
 
 #modal-message {
@@ -305,3 +381,31 @@ ul {
   color: red;
 }
 
+/* Accessibility: High contrast mode support */
+@media (prefers-contrast: high) {
+  .cell {
+    border: 2px solid black;
+  }
+
+  .cell:focus {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+  }
+
+  .flag {
+    border: 2px solid darkgreen;
+  }
+
+  .question-mark {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+/* Accessibility: Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

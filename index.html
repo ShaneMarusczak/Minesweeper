@@ -11,14 +11,20 @@
       name="viewport"
       content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <meta name="Description" content="Minesweeper!" />
+    <meta name="Description" content="Minesweeper - An accessible web-based Minesweeper game" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" type="text/css" href="css/style.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="icon" type="image/png" href="images/mine.png" />
-    <script src="js/mineSweeper.min.js" defer></script>
+    <script src="js/mineSweeper.js" defer></script>
     <title>Minesweeper</title>
   </head>
   <body>
+    <!-- Skip link for keyboard users -->
+    <a href="#gameBoard_UI" class="skip-link">Skip to game board</a>
+
+    <!-- Screen reader announcements -->
+    <div id="sr-announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
     <p id="updateText" title="9:24 PM">Last Updated: December 9, 2021</p>
     <header id="header-tag" class="header-before-start">
       <h1>Minesweeper</h1>
@@ -26,7 +32,8 @@
         id="homeLink"
         href="https://marusczak.com/Games-Home-Page"
         rel="noreferrer"
-        ><img id="homeIcon" src="images/house-icon.png" alt="home"
+        aria-label="Go to Games Home Page"
+        ><img id="homeIcon" src="images/house-icon.png" alt="Home"
       /></a>
 
       <a
@@ -34,44 +41,69 @@
         href="https://github.com/ShaneMarusczak/Minesweeper"
         target="_blank"
         rel="noreferrer"
-        ><img id="githubicon" src="images/github-icon.png" alt="github"
+        aria-label="View source code on GitHub (opens in new tab)"
+        ><img id="githubicon" src="images/github-icon.png" alt="GitHub"
       /></a>
     </header>
-    <div id="timerContainer" class="hide">
-      <h2 id="timer" class="hide"><time>00:00:00</time></h2>
+    <div id="timerContainer" class="hide" role="status" aria-live="polite">
+      <h2 id="timer" class="hide"><time aria-label="Game timer">00:00:00</time></h2>
       <div class="hideTimerContainer">
-        <input type="checkbox" name="hideTimer" id="hideTimer" value="" />
+        <input type="checkbox" name="hideTimer" id="hideTimer" aria-describedby="timerLabel" />
         <label for="hideTimer" id="timerLabel">Hide Timer</label>
       </div>
       <p id="bombsLeftText">
-        Bombs Left:<b><span id="bombsLeft"></span></b>
+        Bombs Left:<b><span id="bombsLeft" aria-live="polite"></span></b>
       </p>
     </div>
-    <div id="gameBoard_UI" class="shadowBox"></div>
+    <div id="gameBoard_UI" class="shadowBox" role="grid" aria-label="Minesweeper game board"></div>
     <div id="btns">
-      <div class="shadowBox" id="buildGrid">
+      <div
+        class="shadowBox"
+        id="buildGrid"
+        role="button"
+        tabindex="0"
+        aria-label="Play - Start a new game"
+      >
         Play
       </div>
-      <div id="reload" class="shadowBox hide" onclick="location.reload()">
+      <div
+        id="reload"
+        class="shadowBox hide"
+        role="button"
+        tabindex="0"
+        aria-label="Start Over - Reset the game"
+      >
         Start Over
       </div>
     </div>
     <form id="difForm">
       <label for="difficulty">Difficulty: </label>
-      <select id="difficulty" class="shadowBox" autocomplete="off">
-        <option value="10" id="difEasy">Easy</option>
-        <option value="15" id="difMed">Medium</option>
-        <option value="20" id="difHard">Hard</option>
-        <option value="30" id="difvHard">Very Hard</option>
+      <select id="difficulty" class="shadowBox" autocomplete="off" aria-describedby="difficulty-help">
+        <option value="10" id="difEasy">Easy (10x10, 12 bombs)</option>
+        <option value="15" id="difMed">Medium (15x15, 35 bombs)</option>
+        <option value="20" id="difHard">Hard (20x20, 62 bombs)</option>
+        <option value="30" id="difvHard">Very Hard (30x30, 107 bombs)</option>
       </select>
+      <p id="difficulty-help" class="sr-only">Select a difficulty level before starting the game</p>
     </form>
-    <div id="highScores" class="hide">
+    <div id="highScores" class="hide" aria-label="High Scores">
       <p>High Scores</p>
       <ul>
-        <li>Easy: <span id="easyBestScore"></span></li>
-        <li>Medium: <span id="medBestScore"></span></li>
-        <li>Hard: <span id="hardBestScore"></span></li>
-        <li>Very Hard: <span id="vhardBestScore"></span></li>
+        <li>Easy: <span id="easyBestScore" aria-label="Easy high score"></span></li>
+        <li>Medium: <span id="medBestScore" aria-label="Medium high score"></span></li>
+        <li>Hard: <span id="hardBestScore" aria-label="Hard high score"></span></li>
+        <li>Very Hard: <span id="vhardBestScore" aria-label="Very Hard high score"></span></li>
+      </ul>
+    </div>
+
+    <!-- Keyboard instructions for screen readers -->
+    <div id="keyboard-instructions" class="sr-only">
+      <h2>Keyboard Controls</h2>
+      <ul>
+        <li>Arrow keys: Navigate between cells</li>
+        <li>Enter or Space: Reveal a cell</li>
+        <li>F key: Toggle flag on a cell</li>
+        <li>Right-click: Cycle through flag and question mark</li>
       </ul>
     </div>
   </body>
