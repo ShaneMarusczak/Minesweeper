@@ -179,6 +179,16 @@ p {
   background-color: #add8e6;
 }
 
+/* Classic Minesweeper number colors */
+.number-1 { color: #0000ff; }
+.number-2 { color: #008000; }
+.number-3 { color: #ff0000; }
+.number-4 { color: #000080; }
+.number-5 { color: #800000; }
+.number-6 { color: #008080; }
+.number-7 { color: #000000; }
+.number-8 { color: #808080; }
+
 .explosion {
   background-color: red !important;
   background-image: url("../images/boom.png");
